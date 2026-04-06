@@ -1,0 +1,20 @@
+# Туннели к сервисам в docker-compose (имена сервисов = DNS в общей сети).
+# Не используйте host.docker.internal — на Windows часто даёт ERR_NGROK_3004.
+# Образ ngrok/ngrok:latest = agent v3: нужен формат endpoints (не v2 tunnels).
+# Запуск: docker compose --profile ngrok up -d   |   токен: NGROK_AUTHTOKEN в .env
+version: 3
+
+agent:
+  # authtoken задаётся через NGROK_AUTHTOKEN в docker-compose (не храните в файле).
+  web_addr: 0.0.0.0:4040
+
+endpoints:
+  - name: yanak-web
+    upstream:
+      url: http://web:3000
+  - name: yanak-api
+    upstream:
+      url: http://api:4000
+  - name: yanak-admin
+    upstream:
+      url: http://backoffice:3001

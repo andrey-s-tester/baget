@@ -1,0 +1,550 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  customer
+  admin
+  manager
+  worker
+  seller
+  dealer
+  master
+  owner
+}
+
+enum FrameCategory {
+  wood
+  plastic
+  aluminum
+}
+
+enum OrderStatus {
+  new
+  assigned
+  in_progress
+  assembly
+  waiting_materials
+  ready
+  issued
+  cancelled
+}
+
+enum StockItemKind {
+  frame
+  matboard
+  accessory
+  glass
+  backing
+  /// Готовый товар витрины (ShowcaseProduct), учёт в шт.
+  showcase
+}
+
+enum StockMovementReason {
+  purchase
+  adjustment
+  manual
+  /// Списание по розничному заказу
+  order
+}
+
+enum StockReceiptStatus {
+  draft
+  posted
+}
+
+model User {
+  id           String          @id @default(cuid())
+  email        String          @unique
+  passwordHash String
+  role         UserRole
+  name         String?
+  isActive     Boolean         @default(true)
+  employee     Employee?
+  createdAt    DateTime        @default(now())
+  customerJobs CustomerProject[]
+  orders       Order[]         @relation("OrderCustomer")
+  sessions     Session[]
+  payrollLines PayrollLine[]
+  salarySellerAlgorithm SalarySellerAlgorithm?
+  salaryMasterAlgorithm SalaryMasterAlgorithm?
+}
+
+/// Учётный период для ведомости зарплат (например месяц).
+model PayrollPeriod {
+  id        String        @id @default(cuid())
+  label     String
+  dateFrom  DateTime      @db.Date
+  dateTo    DateTime      @db.Date
+  comment   String?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  lines     PayrollLine[]
+
+  @@index([dateFrom(sort: Desc)])
+}
+
+/// Строка начисления зарплаты сотруднику за период.
+model PayrollLine {
+  id        String        @id @default(cuid())
+  periodId  String
+  userId    String
+  amount    Decimal       @db.Decimal(12, 2)
+  note      String?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  period    PayrollPeriod @relation(fields: [periodId], references: [id], onDelete: Cascade)
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([periodId, userId], name: "payroll_line_period_user")
+  @@index([userId])
+}
+
+/// Настройки расчёта зарплаты для конкретного продавца:
+/// ставка (фикс, руб) + процент от продаж его магазина за период.
+model SalarySellerAlgorithm {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  baseAmount  Decimal   @default(1000) @db.Decimal(12, 2)
+  percent     Decimal   @default(0) @db.Decimal(6, 2)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// Настройки расчёта зарплаты мастера: ставка + доля от суммы сборки по заказам + K.
+model SalaryMasterAlgorithm {
+  id                   String   @id @default(cuid())
+  userId               String     @unique
+  baseAmount           Decimal    @default(0) @db.Decimal(12, 2)
+  /// Доля мастера от суммы сборки по его заказам за период, % (0–100)
+  masterSharePercent   Decimal    @default(30) @db.Decimal(6, 2)
+  /// Повышающий коэффициент K (сложность заказов)
+  complexityMultiplier Decimal    @default(1) @db.Decimal(10, 4)
+  /// Операции: сборка рамы (руб/м.п., доля %)
+  frameAssemblyRatePerMeter Decimal @default(0) @db.Decimal(12, 2)
+  frameAssemblyPayMode String @default("percent")
+  frameAssemblySharePercent Decimal @default(30) @db.Decimal(6, 2)
+  /// Откуда брать выручку по операции для пула ЗП: perimeter_tariff | order_assembly_then_frame
+  frameAssemblyRevenueSource String @default("perimeter_tariff")
+  /// Операции: натяжка холста (руб/м², доля %)
+  canvasStretchRatePerM2 Decimal @default(0) @db.Decimal(12, 2)
+  canvasStretchPayMode String @default("percent")
+  canvasStretchSharePercent Decimal @default(30) @db.Decimal(6, 2)
+  /// area_tariff | order_backing (строка «Задник» в чеке при натяжке)
+  canvasStretchRevenueSource String @default("area_tariff")
+  /// Операции: стекло (резка + установка, руб/шт, доля %)
+  glassCutRatePerUnit Decimal @default(0) @db.Decimal(12, 2)
+  glassInstallRatePerUnit Decimal @default(0) @db.Decimal(12, 2)
+  glassPayMode String @default("percent")
+  glassSharePercent Decimal @default(30) @db.Decimal(6, 2)
+  /// unit_tariff | order_glass
+  glassRevenueSource String @default("unit_tariff")
+  /// Операции: задник (резка + установка, руб/шт, доля %)
+  backingCutRatePerUnit Decimal @default(0) @db.Decimal(12, 2)
+  backingInstallRatePerUnit Decimal @default(0) @db.Decimal(12, 2)
+  backingPayMode String @default("percent")
+  backingSharePercent Decimal @default(30) @db.Decimal(6, 2)
+  /// unit_tariff | order_backing (строка «Задник» в чеке, не натяжка)
+  backingRevenueSource String @default("unit_tariff")
+  /// Операции: резка окна в паспарту (руб/шт, доля %)
+  matCutRatePerUnit Decimal @default(0) @db.Decimal(12, 2)
+  matPayMode String @default("percent")
+  matSharePercent Decimal @default(30) @db.Decimal(6, 2)
+  /// unit_tariff | order_matboard
+  matCutRevenueSource String @default("unit_tariff")
+  /// Учитывать ли операцию в начислении ЗП по заказу
+  doesFrameAssembly Boolean @default(true)
+  doesCanvasStretch Boolean @default(true)
+  doesGlass         Boolean @default(true)
+  doesBacking       Boolean @default(true)
+  doesMatCut        Boolean @default(true)
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id         String    @id @default(cuid())
+  userId     String
+  tokenHash  String    @unique
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  userAgent  String?
+  ipAddress  String?
+  createdAt  DateTime  @default(now())
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+/// Fine-grained backoffice permissions per role (owner bypasses in code — full access).
+model RolePermission {
+  id        String   @id @default(cuid())
+  role      UserRole
+  key       String
+  allowed   Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+
+  @@unique([role, key], name: "role_permission_unique")
+  @@index([role])
+}
+
+model Store {
+  id         String     @id @default(cuid())
+  name       String
+  address    String?
+  phone      String?
+  isActive   Boolean    @default(true)
+  createdAt  DateTime   @default(now())
+  employees  Employee[]
+  orders     Order[]
+  overrides  StorePriceOverride[]
+  promoCodes PromoCode[]
+}
+
+model Employee {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  storeId   String?
+  title     String?
+  isActive  Boolean  @default(true)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  store     Store?   @relation(fields: [storeId], references: [id], onDelete: SetNull)
+  tasks     ProductionTask[]
+  createdAt DateTime @default(now())
+}
+
+model FrameProfile {
+  id                    String             @id @default(cuid())
+  sku                   String             @unique
+  name                  String
+  category              FrameCategory
+  /// Источник карточки: bagetnaya_masterskaya | baget_optom_ua | svitart_net | manual
+  catalogSource         String             @default("bagetnaya_masterskaya")
+  widthMm               Int
+  widthWithoutQuarterMm Int?
+  purchasePrice         Decimal            @db.Decimal(10, 2)
+  retailPriceMeter      Decimal            @db.Decimal(10, 2)
+  imageUrl              String?
+  previewImageUrl       String?
+  isActive              Boolean            @default(true)
+  /// Остаток багета на складе, погонные метры
+  stockMeters           Decimal            @default(0) @db.Decimal(12, 3)
+  /// Порог «мало на складе» (подсказка в админке)
+  minStockMeters        Decimal?           @db.Decimal(12, 3)
+  createdAt        DateTime           @default(now())
+  priceRule        PriceRule?
+  orderItems       OrderItem[]
+  overrides        StorePriceOverride[]
+
+  @@index([category, isActive])
+  @@index([catalogSource])
+}
+
+model MatboardType {
+  id          String      @id @default(cuid())
+  name        String
+  color       String?
+  pricePerM2  Decimal     @db.Decimal(10, 2)
+  note        String?
+  isActive    Boolean     @default(true)
+  orderItems  OrderItem[]
+}
+
+/// Каталог паспарту для выбора в конфигураторе (аналогично FrameProfile)
+model MatboardProfile {
+  id          String   @id @default(cuid())
+  sku         String   @unique
+  name        String
+  pricePerM2  Decimal  @db.Decimal(10, 2)
+  imageUrl    String?
+  isActive    Boolean  @default(true)
+  /// Остаток паспарту, м²
+  stockM2     Decimal  @default(0) @db.Decimal(12, 4)
+  minStockM2  Decimal? @db.Decimal(12, 4)
+  createdAt   DateTime @default(now())
+}
+
+enum AccessoryGroup {
+  hanger
+  hanger_type
+  /// Подрамник (заказ / калькулятор)
+  subframe
+  /// Тип изделия / сборки
+  assembly_product
+  /// Прилегание (способ фиксации)
+  fit_type
+  /// Ножка / подставка для настольных рам
+  stand_leg
+  /// Доп. услуги по оформлению (цена за шт или за п.м. — см. priceUnit)
+  finishing
+}
+
+/// Как интерпретировать поле price у AccessoryItem
+enum AccessoryPriceUnit {
+  piece
+  linear_meter
+}
+
+model AccessoryItem {
+  id         String              @id @default(cuid())
+  code       String              @unique
+  group      AccessoryGroup
+  name       String
+  price      Decimal             @default(0) @db.Decimal(10, 2)
+  /// piece — цена за шт; linear_meter — цена за п.м. по периметру проёма (с паспарту)
+  priceUnit  AccessoryPriceUnit  @default(piece)
+  isActive   Boolean             @default(true)
+  /// Не учитывать остаток и не списывать при заказе
+  excludeFromStock Boolean       @default(false)
+  stockQty   Decimal             @default(0) @db.Decimal(12, 2)
+  minStockQty Decimal?           @db.Decimal(12, 2)
+  createdAt  DateTime            @default(now())
+}
+
+model StockReceipt {
+  id              String             @id @default(cuid())
+  docNumber       String             @unique
+  status          StockReceiptStatus @default(draft)
+  comment         String?
+  postedAt        DateTime?
+  createdAt       DateTime           @default(now())
+  createdByUserId String?
+  lines           StockReceiptLine[]
+  movements       StockMovement[]
+
+  @@index([status, createdAt])
+}
+
+model StockReceiptLine {
+  id        String        @id @default(cuid())
+  receiptId String
+  kind      StockItemKind
+  sku       String
+  quantity  Decimal       @db.Decimal(14, 4)
+  lineNo    Int
+  receipt   StockReceipt  @relation(fields: [receiptId], references: [id], onDelete: Cascade)
+
+  @@index([receiptId])
+}
+
+model StockMovement {
+  id              String              @id @default(cuid())
+  kind            StockItemKind
+  sku             String
+  delta           Decimal             @db.Decimal(14, 4)
+  unit            String
+  reason          StockMovementReason @default(manual)
+  note            String?
+  createdAt       DateTime            @default(now())
+  createdByUserId String?
+  receiptId       String?
+  receipt         StockReceipt?       @relation(fields: [receiptId], references: [id], onDelete: SetNull)
+
+  @@index([kind, sku])
+  @@index([createdAt])
+  @@index([receiptId])
+}
+
+model GlassType {
+  id          String      @id @default(cuid())
+  code        String?     @unique
+  name        String
+  pricePerM2  Decimal     @db.Decimal(10, 2)
+  /// Не учитывать остаток и не списывать при заказе
+  excludeFromStock Boolean @default(false)
+  /// Остаток стекла, м²
+  stockM2     Decimal     @default(0) @db.Decimal(12, 4)
+  minStockM2  Decimal?    @db.Decimal(12, 4)
+  isActive    Boolean     @default(true)
+  orderItems  OrderItem[]
+}
+
+model BackingType {
+  id          String      @id @default(cuid())
+  code        String?     @unique
+  name        String
+  pricePerM2  Decimal?    @db.Decimal(10, 2)
+  note        String?
+  /// Не учитывать остаток и не списывать при заказе
+  excludeFromStock Boolean @default(false)
+  /// Остаток задника, м²
+  stockM2     Decimal     @default(0) @db.Decimal(12, 4)
+  minStockM2  Decimal?    @db.Decimal(12, 4)
+  isActive    Boolean     @default(true)
+  orderItems  OrderItem[]
+}
+
+model PriceRule {
+  id                    String       @id @default(cuid())
+  frameProfileId        String       @unique
+  frameWasteCoeff       Decimal      @default(1.10) @db.Decimal(4, 2)
+  minimalOrderPrice     Decimal      @default(0) @db.Decimal(10, 2)
+  assemblyPrice         Decimal      @default(0) @db.Decimal(10, 2)
+  rushFee               Decimal      @default(0) @db.Decimal(10, 2)
+  createdAt             DateTime     @default(now())
+  frameProfile          FrameProfile @relation(fields: [frameProfileId], references: [id], onDelete: Cascade)
+}
+
+/// Global pricing defaults (single row)
+model PricingConfig {
+  id                 String   @id @default(cuid())
+  frameWasteCoeff    Decimal  @default(1.1) @db.Decimal(4, 2)
+  assemblyPrice      Decimal  @default(750) @db.Decimal(10, 2)
+  minimalOrderPrice  Decimal  @default(1500) @db.Decimal(10, 2)
+  matboardPricePerM2 Decimal  @default(14552) @db.Decimal(10, 2)
+  updatedAt          DateTime @updatedAt
+}
+
+model StorePriceOverride {
+  id             String       @id @default(cuid())
+  storeId        String
+  frameProfileId String
+  retailPriceMeter Decimal    @db.Decimal(10, 2)
+  store          Store        @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  frameProfile   FrameProfile @relation(fields: [frameProfileId], references: [id], onDelete: Cascade)
+
+  @@unique([storeId, frameProfileId])
+}
+
+model PromoCode {
+  id              String    @id @default(cuid())
+  code            String    @unique
+  discountPercent Decimal?  @db.Decimal(5, 2)
+  discountAmount  Decimal?  @db.Decimal(10, 2)
+  storeId         String?
+  isActive        Boolean   @default(true)
+  validUntil      DateTime?
+  store           Store?    @relation(fields: [storeId], references: [id], onDelete: SetNull)
+}
+
+/// Маркетинговая акция (текст, сроки; для витрины и внутреннего учёта)
+model MarketingCampaign {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  isActive    Boolean   @default(true)
+  validFrom   DateTime?
+  validUntil  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+/// Готовые картины для витрины (управляются из админки)
+model ShowcaseProduct {
+  id          String   @id @default(cuid())
+  title       String
+  artist      String
+  sizeLabel   String
+  priceRub    Decimal  @db.Decimal(12, 2)
+  imageUrl    String
+  description String?
+  /// Количество штук на складе (витрина)
+  stockQty    Int      @default(0)
+  inStock     Boolean  @default(true)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isActive, createdAt(sort: Desc)])
+}
+
+model CustomerProject {
+  id          String    @id @default(cuid())
+  customerId  String
+  imageUrl    String?
+  widthMm     Int
+  heightMm    Int
+  payloadJson Json
+  customer    User      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+}
+
+/// Розничный покупатель (телефон + имя), не путать с User.role = customer
+model Customer {
+  id              String   @id @default(cuid())
+  name            String
+  phone           String
+  phoneNormalized String   @unique
+  email           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  orders          Order[]
+}
+
+/// Глобальный счётчик заказов: одна строка с id = 1, `lastNumber` — последний выданный номер.
+model OrderNumberSequence {
+  id         Int @id
+  lastNumber Int @default(0)
+}
+
+model Order {
+  id               String               @id @default(cuid())
+  /// Публичный номер заказа: «1», «2», «3»… (сквозной счётчик).
+  orderNumber      String               @unique
+  customerId       String?
+  retailCustomerId String?
+  customerName     String
+  customerPhone    String?
+  customerEmail    String?
+  storeId          String?
+  status           OrderStatus          @default(new)
+  totalSnapshot    Decimal              @db.Decimal(10, 2)
+  breakdownJson    Json
+  createdAt        DateTime             @default(now())
+  customer         User?                @relation("OrderCustomer", fields: [customerId], references: [id], onDelete: SetNull)
+  retailCustomer   Customer?            @relation(fields: [retailCustomerId], references: [id], onDelete: SetNull)
+  store            Store?               @relation(fields: [storeId], references: [id], onDelete: SetNull)
+  items            OrderItem[]
+  statusHistory    OrderStatusHistory[]
+  tasks            ProductionTask[]
+}
+
+model OrderItem {
+  id            String        @id @default(cuid())
+  orderId       String
+  frameProfileId String
+  matboardTypeId String?
+  glassTypeId   String?
+  backingTypeId String?
+  widthMm       Int
+  heightMm      Int
+  priceSnapshot Json
+  order         Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  frameProfile  FrameProfile  @relation(fields: [frameProfileId], references: [id], onDelete: Restrict)
+  matboardType  MatboardType? @relation(fields: [matboardTypeId], references: [id], onDelete: SetNull)
+  glassType     GlassType?    @relation(fields: [glassTypeId], references: [id], onDelete: SetNull)
+  backingType   BackingType?  @relation(fields: [backingTypeId], references: [id], onDelete: SetNull)
+}
+
+model OrderStatusHistory {
+  id        String      @id @default(cuid())
+  orderId   String
+  status    OrderStatus
+  actorId   String?
+  note      String?
+  createdAt DateTime    @default(now())
+  order     Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model ProductionTask {
+  id          String      @id @default(cuid())
+  orderId      String
+  employeeId   String?
+  status       OrderStatus @default(assigned)
+  note         String?
+  resultPhoto  String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  order        Order      @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  employee     Employee?  @relation(fields: [employeeId], references: [id], onDelete: SetNull)
+}

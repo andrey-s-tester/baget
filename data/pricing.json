@@ -1,0 +1,45 @@
+{
+  "frameWasteCoeff": 1.3,
+  "assemblyPrice": 67,
+  "minimalOrderPrice": 250,
+  "matboardPricePerM2": 60,
+  "glassPrices": [
+    {
+      "id": "none",
+      "name": "Нет",
+      "price": 0
+    },
+    {
+      "id": "regular",
+      "name": "Обычное",
+      "price": 2000
+    },
+    {
+      "id": "matte",
+      "name": "Матовое",
+      "price": 4500
+    },
+    {
+      "id": "anti_glare",
+      "name": "Антиблик",
+      "price": 21250
+    },
+    {
+      "id": "acrylic",
+      "name": "Пластиковое",
+      "price": 2200
+    }
+  ],
+  "backingPrices": [
+    {
+      "id": "cardboard",
+      "name": "Картон",
+      "price": 875
+    },
+    {
+      "id": "foam5",
+      "name": "Пенокартон 5 мм",
+      "price": 2571
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "store-1",
+    "name": "Зеленый рынок",
+    "address": "Улица Карла Либкнехта, 226",
+    "phone": "",
+    "isActive": true
+  },
+  {
+    "id": "store-2",
+    "name": "Советская",
+    "address": "Советская ул., 119",
+    "phone": "",
+    "isActive": true
+  }
+]

@@ -1,0 +1,82 @@
+{
+  "name": "yanak-platform",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n api,web,bo \"npm run dev -w apps/api\" \"npm run dev -w apps/web\" \"npm run dev -w apps/backoffice\"",
+    "dev:web": "npm run dev -w apps/web",
+    "dev:backoffice": "npm run dev -w apps/backoffice",
+    "dev:backoffice:fresh": "npm run dev:fresh -w @yanak/backoffice",
+    "start:web": "npm run start -w apps/web",
+    "start:backoffice": "npm run start -w apps/backoffice",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "catalog:pull": "node scripts/pull-baget-catalog.mjs",
+    "catalog:pull-optom": "node scripts/pull-baget-optom-catalog.mjs",
+    "catalog:seed-optom": "node scripts/seed-baget-optom-catalog.mjs",
+    "catalog:pull-svitart": "node scripts/pull-svitart-baget-catalog.mjs",
+    "catalog:seed-svitart": "node scripts/seed-svitart-baget-catalog.mjs",
+    "catalog:pull-matboard": "node scripts/pull-matboard-catalog.mjs",
+    "catalog:download-images": "node scripts/download-baget-images.mjs",
+    "catalog:sync-web": "node -e \"const fs=require('fs'); fs.copyFileSync('data/baget-catalog.json','apps/web/lib/baget-catalog.json');\"",
+    "catalog:sync-backoffice": "node scripts/sync-backoffice.mjs",
+    "db:push": "prisma db push --schema prisma/schema.prisma",
+    "catalog:seed": "node scripts/seed-baget-catalog.mjs",
+    "materials:seed": "node scripts/seed-materials.mjs",
+    "matboard:seed": "node scripts/seed-matboard-catalog.mjs",
+    "promo:seed": "node scripts/seed-promo-codes.mjs",
+    "db:seed": "npm run catalog:seed && npm run materials:seed && npm run matboard:seed && npm run promo:seed",
+    "auth:seed": "node scripts/seed-auth-users.mjs",
+    "auth:link-store": "node scripts/link-employees-missing-store.mjs",
+    "desktop:start": "npm run start -w @yanak/admin-desktop",
+    "desktop:prepare": "node scripts/prepare-desktop-bundled-ui.cjs && node scripts/fetch-node-win.cjs",
+    "desktop:dist": "npm run dist -w @yanak/admin-desktop",
+    "desktop:dist:quick": "npm run dist:quick -w @yanak/admin-desktop",
+    "desktop:dist:ngrok": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-desktop-ngrok.ps1",
+    "compose:up": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/docker-up.ps1",
+    "compose:local": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/docker-up-local.ps1",
+    "compose:https": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/docker-up-https.ps1",
+    "compose:domain": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/docker-up-domain.ps1",
+    "compose:https:logs": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/docker-caddy-logs.ps1",
+    "ngrok:up": "docker compose --profile ngrok up -d",
+    "ngrok:down": "docker compose --profile ngrok stop ngrok",
+    "ngrok:refresh": "docker compose --profile ngrok up -d --force-recreate ngrok && node scripts/print-ngrok-urls.mjs",
+    "ngrok:urls": "node scripts/print-ngrok-urls.mjs",
+    "dns:cf-sync": "node scripts/dns-cloudflare-sync.mjs",
+    "win:native:dev:api": "npm run dev:domain -w apps/api",
+    "win:native:dev:web": "npm run dev:domain -w apps/web",
+    "win:native:dev:backoffice": "npm run dev:domain -w apps/backoffice",
+    "win:native:build": "npx prisma generate --schema=prisma/schema.prisma && env-cmd -f .env -- npm run build -w apps/api && env-cmd -f .env -- npm run build -w apps/web && env-cmd -f .env -- npm run build -w apps/backoffice",
+    "win:native:start:api": "env-cmd -f .env -- npm run start -w apps/api",
+    "win:native:start:web": "env-cmd -f .env -- npm run start -w apps/web",
+    "win:native:start:backoffice": "env-cmd -f .env -- npm run start -w apps/backoffice",
+    "caddy:win:download": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/download-caddy-windows.ps1",
+    "caddy:win:start": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/start-caddy-windows.ps1",
+    "tunnel:win:download": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/download-cloudflared-windows.ps1",
+    "tunnel:win:start": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/start-cloudflared-tunnel.ps1",
+    "tunnel:win:diagnose": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/diagnose-domain-windows.ps1",
+    "tunnel:win:install-service": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-cloudflared-service.ps1",
+    "server:backup": "bash scripts/server-backup.sh",
+    "server:restore": "bash scripts/server-restore.sh"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "env-cmd": "^10.1.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.2",
+    "prisma": "^6.19.2"
+  },
+  "overrides": {
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  }
+}

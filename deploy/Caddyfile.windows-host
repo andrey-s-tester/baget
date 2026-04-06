@@ -1,0 +1,30 @@
+# TLS + reverse proxy на самом Windows (без Docker для Caddy).
+# Сервисы слушают на localhost: витрина :3000, API :4000, админка :3001.
+#
+# Установка Caddy: https://caddyserver.com/docs/install#windows
+# Запуск из каталога deploy (чтобы подхватить файл):
+#   set CADDY_EMAIL=postmaster@bagetnaya-yanak.ru
+#   caddy run --config Caddyfile.windows-host
+# Или служба: https://caddyserver.com/docs/running#windows-service
+#
+# Cloudflare: SSL/TLS = Full (strict). Порты 80/443 на этом хосте (освободите от IIS).
+# Если используете Docker на этой же машине с опубликованными портами — замените 127.0.0.1 на нужный адрес.
+
+{
+	email postmaster@bagetnaya-yanak.ru
+}
+
+bagetnaya-yanak.ru, www.bagetnaya-yanak.ru {
+	encode gzip
+	reverse_proxy 127.0.0.1:3000
+}
+
+api.bagetnaya-yanak.ru {
+	encode gzip
+	reverse_proxy 127.0.0.1:4000
+}
+
+admin.bagetnaya-yanak.ru {
+	encode gzip
+	reverse_proxy 127.0.0.1:3001
+}

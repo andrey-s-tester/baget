@@ -1,0 +1,179 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: yanak-postgres
+    environment:
+      POSTGRES_DB: yanak
+      POSTGRES_USER: yanak
+      POSTGRES_PASSWORD: yanak
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: yanak-redis
+    ports:
+      - "6379:6379"
+
+  api:
+    image: node:20-alpine
+    container_name: yanak-api
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - api_node_modules:/app/node_modules
+    ports:
+      - "4001:4000"
+    environment:
+      - PORT=4000
+      - DATABASE_URL=postgresql://yanak:yanak@postgres:5432/yanak?schema=public
+      - REDIS_URL=redis://redis:6379
+      # Продакшен: https://витрина,https://админка (см. .env — CORS_ORIGINS)
+      - CORS_ORIGINS=${CORS_ORIGINS:-}
+      # HTTPS на домене: COOKIE_SECURE=1 (иначе браузер не сохранит session cookie)
+      - COOKIE_SECURE=${COOKIE_SECURE:-0}
+      # По умолчанию 0: при перезапуске контейнера не гонять db:seed/auth:seed (магазины, каталог, пользователи не перезаписываются).
+      # Первый раз или после сброса БД: RUN_SEED_ON_START=1 docker compose up -d api
+      - RUN_SEED_ON_START=${RUN_SEED_ON_START:-0}
+    # migrate deploy — единый путь схемы (db push с || true раньше молча ломал колонку orderNumber / OrderNumberSequence).
+    command: sh -c "npm install && npx prisma generate --schema=prisma/schema.prisma && npx prisma migrate deploy --schema=prisma/schema.prisma && ([ \"$$RUN_SEED_ON_START\" = \"1\" ] && npm run db:seed && npm run auth:seed || true) && (npm run build -w apps/api || true) && npm run start -w apps/api"
+    depends_on:
+      - postgres
+      - redis
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "node -e \"fetch('http://127.0.0.1:4000/api/system/health').then(r=>r.json()).then(d=>process.exit(d&&d.ok?0:1)).catch(()=>process.exit(1))\"",
+        ]
+      interval: 5s
+      timeout: 10s
+      retries: 30
+      start_period: 180s
+
+  web:
+    image: node:20-alpine
+    container_name: yanak-web
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - web_node_modules:/app/node_modules
+      # .next в volume, не на bind-mount с Windows — иначе после рестарта часто 404 на /_next/static (рассинхрон BUILD_ID/чанков).
+      - web_next_build:/app/apps/web/.next
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_TELEMETRY_DISABLED=1
+      - API_URL=http://api:4000
+      # Браузер ходит на публичный API (CORS + прямые запросы). Задайте в .env при своих доменах.
+      - NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL:-}
+      # 0 (по умолчанию) — next build + next start (быстрее). 1 — next dev + HMR.
+      - NEXT_DEV_FRONTEND=${NEXT_DEV_FRONTEND:-0}
+      - WATCHPACK_POLLING=${WATCHPACK_POLLING:-true}
+      # Если NEXT_DEV_FRONTEND=0: FORCE_WEB_NEXT_BUILD=1 — пересобрать. SKIP_WEB_NEXT_BUILD=1 — не собирать при BUILD_ID.
+      - SKIP_WEB_NEXT_BUILD=${SKIP_WEB_NEXT_BUILD:-0}
+      - FORCE_WEB_NEXT_BUILD=${FORCE_WEB_NEXT_BUILD:-0}
+    command: ["sh", "-lc", "sed -i 's/\\r$//' /app/scripts/docker-web-start.sh && sh /app/scripts/docker-web-start.sh"]
+    depends_on:
+      api:
+        condition: service_healthy
+      postgres:
+        condition: service_started
+      redis:
+        condition: service_started
+
+  backoffice:
+    image: node:20-alpine
+    container_name: yanak-backoffice
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - backoffice_node_modules:/app/node_modules
+      # .next в volume, не на bind-mount с Windows — иначе 404 на /_next/static (как у web).
+      - backoffice_next_build:/app/apps/backoffice/.next
+    ports:
+      - "3001:3001"
+    environment:
+      - NEXT_TELEMETRY_DISABLED=1
+      - BACKEND_API_URL=http://api:4000
+      # Сутки на дашборде / в отчёте продаж (00:00 в этом поясе). Одна переменная — обе для SSR и браузера.
+      - BUSINESS_TIMEZONE=${BUSINESS_TIMEZONE:-Europe/Chisinau}
+      - NEXT_PUBLIC_BUSINESS_TIMEZONE=${BUSINESS_TIMEZONE:-Europe/Chisinau}
+      # Только NEXT_DEV_BACKOFFICE (не путать с NEXT_DEV_FRONTEND у web).
+      # По умолчанию 0 = next build + next start (быстрее). 1 = next dev + HMR.
+      - NEXT_DEV_FRONTEND=${NEXT_DEV_BACKOFFICE:-0}
+      - WATCHPACK_POLLING=${WATCHPACK_POLLING:-true}
+      # Вместе с WATCHPACK_POLLING — надёжнее отслеживание файлов на bind-mount (Windows + Docker)
+      - CHOKIDAR_USEPOLLING=true
+      # Если NEXT_DEV_FRONTEND=0: FORCE_BACKOFFICE_NEXT_BUILD / SKIP_BACKOFFICE_NEXT_BUILD — см. scripts/docker-backoffice-start.sh
+      - SKIP_BACKOFFICE_NEXT_BUILD=${SKIP_BACKOFFICE_NEXT_BUILD:-0}
+      - FORCE_BACKOFFICE_NEXT_BUILD=${FORCE_BACKOFFICE_NEXT_BUILD:-0}
+    # См. scripts/docker-backoffice-start.sh
+    # Trim CRLF on Windows-mounted files to avoid "/bin/sh: illegal option -" on set -e.
+    command: ["sh", "-lc", "sed -i 's/\\r$//' /app/scripts/docker-backoffice-start.sh && sh /app/scripts/docker-backoffice-start.sh"]
+    depends_on:
+      api:
+        condition: service_healthy
+      postgres:
+        condition: service_started
+      redis:
+        condition: service_started
+
+  # HTTPS на 80/443, сертификаты Let's Encrypt, прокси на web / api / backoffice.
+  # Запуск вместе со стеком: docker compose --profile https up -d
+  # На сервере: откройте 80 и 443 в фаерволе; в Cloudflare — SSL/TLS = Full (strict).
+  caddy:
+    image: caddy:2-alpine
+    container_name: yanak-caddy
+    restart: unless-stopped
+    profiles:
+      - https
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      - CADDY_EMAIL=${CADDY_EMAIL:-postmaster@bagetnaya-yanak.ru}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+      - backoffice
+      - api
+
+  # Публичные URL: http://localhost:4040 (инспектор) или scripts/show-ngrok-urls.ps1
+  # Запуск: задайте NGROK_AUTHTOKEN в .env, затем: docker compose --profile ngrok up -d ngrok
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: yanak-ngrok
+    profiles:
+      - ngrok
+    restart: unless-stopped
+    environment:
+      # Задайте в .env: NGROK_AUTHTOKEN=... (https://dashboard.ngrok.com/get-started/your-authtoken)
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN:-}
+    ports:
+      - "4040:4040"
+    volumes:
+      - ./ngrok.yml:/etc/ngrok.yml:ro
+    command:
+      - start
+      - --all
+      - --config
+      - /etc/ngrok.yml
+
+volumes:
+  postgres_data:
+  api_node_modules:
+  web_node_modules:
+  web_next_build:
+  backoffice_node_modules:
+  backoffice_next_build:
+  caddy_data:
+  caddy_config:

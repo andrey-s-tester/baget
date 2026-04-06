@@ -1,0 +1,1031 @@
+[
+  {
+    "sku": "11092",
+    "name": "Серый",
+    "pricePerM2": 140,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/W601.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "11093",
+    "name": "Серый",
+    "pricePerM2": 14885,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/W602.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "11132",
+    "name": "Серый",
+    "pricePerM2": 14885,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/W600.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12001",
+    "name": "",
+    "pricePerM2": 4040,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/B501.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12002",
+    "name": "",
+    "pricePerM2": 4040,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/B502.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12003",
+    "name": "",
+    "pricePerM2": 4040,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/B504.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12004",
+    "name": "",
+    "pricePerM2": 4040,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/B505.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12005",
+    "name": "",
+    "pricePerM2": 4040,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/B510.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12006",
+    "name": "",
+    "pricePerM2": 4040,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/B511.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12007",
+    "name": "",
+    "pricePerM2": 4040,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/B512.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12008",
+    "name": "",
+    "pricePerM2": 4040,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/B513.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12010",
+    "name": "",
+    "pricePerM2": 4040,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/B515.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12011",
+    "name": "",
+    "pricePerM2": 4040,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/B516.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12012",
+    "name": "",
+    "pricePerM2": 4040,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/B1017.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12013",
+    "name": "",
+    "pricePerM2": 4040,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/B1023.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12014",
+    "name": "",
+    "pricePerM2": 4040,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/B1024.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12017",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1001.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12018",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1002.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12019",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1003.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12020",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1004.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12021",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1005.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12022",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1006.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12025",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1010.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12026",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1011.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12027",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1012.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12028",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1013.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12029",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1014.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12030",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1015.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12031",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1016.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12032",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1017.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12033",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1018.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12035",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1022.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12036",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1023.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12037",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1024.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12038",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1025.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12039",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1026.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12040",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1027.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12041",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1028.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12042",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1029.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12043",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1030.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12044",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1031.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12045",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1032.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12046",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1033.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12047",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1034.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12048",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1035.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12050",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1037.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12051",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1038.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12052",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1039.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12053",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1040.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12054",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1043.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12055",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1044.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12056",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1045.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12057",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1046.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12058",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1047.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12059",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1048.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12060",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1049.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12061",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1050.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12062",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1051.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12063",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1052.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12064",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1053.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12065",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1054.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12066",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1056.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12067",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1057.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12068",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1058.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12069",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1059.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12070",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1061.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12071",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1062.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12072",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1065.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12073",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1067.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12074",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1070.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12075",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1071.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12076",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1076.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12077",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1079.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12078",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1080.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12079",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1082.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12080",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1094.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12081",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1095.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12082",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1097.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12083",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1102.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12084",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1103.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12085",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1104.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12086",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1109.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12087",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1110.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12088",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1112.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12089",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1115.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12090",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1116.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12091",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1121.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12092",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1123.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12093",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1124.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12094",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1126.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12095",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1142.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12096",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1143.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12097",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1144.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12098",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1148.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12099",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1151.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12100",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1152.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12101",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1153.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12102",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1154.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12103",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1155.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12104",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1157.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12105",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1158.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12106",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1159.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12107",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1160.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12109",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1163.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12110",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1164.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12111",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1165.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12113",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1167.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12114",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1168.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12115",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1169.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12116",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1170.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12117",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1171.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12118",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1172.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12119",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1173.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12120",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1174.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12122",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1176.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12123",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1177.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12125",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1179.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12126",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1180.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12127",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1181.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12128",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1182.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12129",
+    "name": "",
+    "pricePerM2": 3120,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q1183.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12132",
+    "name": "",
+    "pricePerM2": 6100,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/JQ1002.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12133",
+    "name": "",
+    "pricePerM2": 6100,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/JQ1003.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12134",
+    "name": "",
+    "pricePerM2": 6100,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/JQ1005.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12135",
+    "name": "",
+    "pricePerM2": 6100,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/JQ1033.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12136",
+    "name": "",
+    "pricePerM2": 6100,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/JQ1062.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12137",
+    "name": "",
+    "pricePerM2": 6100,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/JQ1154.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12138",
+    "name": "",
+    "pricePerM2": 3645,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q8801.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12140",
+    "name": "",
+    "pricePerM2": 3645,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q8806.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12141",
+    "name": "",
+    "pricePerM2": 3645,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q8807.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12142",
+    "name": "",
+    "pricePerM2": 3645,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q8809.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12143",
+    "name": "",
+    "pricePerM2": 3645,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q8811.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12144",
+    "name": "",
+    "pricePerM2": 3645,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/Q8812.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12171",
+    "name": "",
+    "pricePerM2": 2365,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/939.QP.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12192",
+    "name": "",
+    "pricePerM2": 2365,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/938.QP.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12200",
+    "name": "",
+    "pricePerM2": 2365,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/928.QP.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12218",
+    "name": "",
+    "pricePerM2": 2365,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/971.QP.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12222",
+    "name": "",
+    "pricePerM2": 2365,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/978.QP.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12224",
+    "name": "",
+    "pricePerM2": 2365,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/986.QP.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12236",
+    "name": "",
+    "pricePerM2": 2365,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/989.QP.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12237",
+    "name": "",
+    "pricePerM2": 2365,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/979.QP.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12250",
+    "name": "",
+    "pricePerM2": 2365,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/9015.QP.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12252",
+    "name": "",
+    "pricePerM2": 2365,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/9018.QP.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12257",
+    "name": "",
+    "pricePerM2": 2400,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/9027.QP.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12258",
+    "name": "",
+    "pricePerM2": 2400,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/9028.QP.jpg",
+    "isActive": false
+  },
+  {
+    "sku": "12259",
+    "name": "",
+    "pricePerM2": 2400,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/9029.QP.jpg",
+    "isActive": true
+  },
+  {
+    "sku": "12260",
+    "name": "",
+    "pricePerM2": 2400,
+    "imageUrl": "https://bagetnaya-masterskaya.com/pi/9030.QP.jpg",
+    "isActive": false
+  }
+]

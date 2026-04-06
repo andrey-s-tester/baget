@@ -1,0 +1,22 @@
+{
+  "name": "@yanak/constructor",
+  "version": "0.1.0",
+  "private": true,
+  "sideEffects": ["**/*.css"],
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./constructor.css": "./src/constructor.css"
+  },
+  "dependencies": {
+    "@yanak/receipt": "0.1.0",
+    "@yanak/types": "0.1.0",
+    "@yanak/ui": "0.1.0"
+  },
+  "peerDependencies": {
+    "next": "^15",
+    "react": "^19",
+    "react-dom": "^19"
+  }
+}

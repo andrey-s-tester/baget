@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Настройки Yanak Admin</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, Segoe UI, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    h1 { font-size: 18px; margin: 0 0 16px; }
+    label { display: block; font-size: 13px; margin-bottom: 6px; font-weight: 600; }
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+    .hint { font-size: 12px; color: #64748b; margin: -8px 0 14px; }
+    .row { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+    button {
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .primary { background: #0f172a; color: #fff; }
+    .ghost { background: #e2e8f0; color: #334155; }
+    .hidden { display: none !important; }
+    .panel {
+      padding: 12px;
+      background: #e2e8f0;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 14px;
+      color: #334155;
+    }
+    .manifest-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: -4px 0 12px;
+    }
+    .btn-sm {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      background: #e2e8f0;
+      color: #334155;
+    }
+    .btn-sm:hover { background: #cbd5e1; }
+    code { font-size: 12px; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Подключение</h1>
+
+  <div id="bundledPanel" class="panel hidden">
+    Интерфейс админки встроен в приложение. Укажите URL вашего API (Nest), к которому будет обращаться админка.
+  </div>
+
+  <div id="remoteBackofficeBlock">
+    <label for="backofficeUrl">URL backoffice (HTTPS)</label>
+    <input id="backofficeUrl" type="url" placeholder="https://admin.example.com" autocomplete="off" />
+    <p class="hint">Адрес, где у вас открыта админка в браузере (режим без встроенного UI).</p>
+  </div>
+
+  <div id="apiBlock">
+    <label for="apiBaseUrl">URL API (Nest)</label>
+    <input id="apiBaseUrl" type="url" placeholder="http://localhost:4001 (Docker) или :4000 без Docker" autocomplete="off" />
+    <p class="hint" id="apiHint">В режиме с встроенной админкой обязателен. Для удалённого URL админки — базовый адрес бэкенда (если не задан, берётся из URL админки).</p>
+  </div>
+
+  <label for="updateManifestUrl">URL манифеста обновлений (необязательно)</label>
+  <input id="updateManifestUrl" type="url" placeholder="https://api.example.com/api/system/desktop-admin-update" autocomplete="off" />
+  <p class="hint">
+    Если поле пустое, программа сама вычислит адрес от <strong>URL API</strong> или (в режиме внешней админки) от URL админки.
+    На сервере API должны быть заданы <code>DESKTOP_ADMIN_LATEST_VERSION</code> и <code>DESKTOP_ADMIN_DOWNLOAD_URL</code>.
+  </p>
+  <div class="manifest-actions">
+    <button type="button" class="btn-sm" id="fillManifest">Подставить типовой URL</button>
+    <button type="button" class="btn-sm" id="copyManifest">Скопировать типовой URL</button>
+  </div>
+  <p class="hint" style="margin-top: -4px">
+    Обычно путь: <code>…/api/system/desktop-admin-update</code> — в ответе JSON с полями <code>latest</code> и <code>downloadUrl</code>.
+    Вставить из буфера в поле: <strong>ПКМ → Вставить</strong> или меню <strong>Правка → Вставить</strong> (Ctrl+V).
+  </p>
+
+  <div class="row">
+    <button type="button" class="ghost" id="cancel">Отмена</button>
+    <button type="button" class="primary" id="save">Сохранить</button>
+  </div>
+  <script>
+    (async function () {
+      const mode = await window.yanakDesktop.getUiMode();
+      const cfg = await window.yanakDesktop.loadConfig();
+
+      const bundledPanel = document.getElementById("bundledPanel");
+      const remoteBlock = document.getElementById("remoteBackofficeBlock");
+      const apiHint = document.getElementById("apiHint");
+
+      if (mode.bundled) {
+        bundledPanel.classList.remove("hidden");
+        remoteBlock.classList.add("hidden");
+        apiHint.textContent =
+          "Обязательно: URL API, к которому приложение будет ходить за данными.";
+      }
+
+      document.getElementById("backofficeUrl").value = cfg.backofficeUrl || "";
+      document.getElementById("apiBaseUrl").value = cfg.apiBaseUrl || "";
+      document.getElementById("updateManifestUrl").value = cfg.updateManifestUrl || "";
+
+      function computeSuggestedManifestUrl() {
+        const api = document.getElementById("apiBaseUrl").value.trim();
+        if (api) {
+          try {
+            return new URL(api).origin + "/api/system/desktop-admin-update";
+          } catch (_) {}
+        }
+        if (mode.bundled) return "";
+        const bo = document.getElementById("backofficeUrl").value.trim();
+        if (!bo) return "";
+        try {
+          const u = new URL(bo);
+          if (u.hostname === "localhost" || u.hostname === "127.0.0.1") {
+            return u.protocol + "//" + u.hostname + ":4001/api/system/desktop-admin-update";
+          }
+          const host = u.hostname.replace(/^admin\./, "api.");
+          return u.protocol + "//" + host + "/api/system/desktop-admin-update";
+        } catch (_) {
+          return "";
+        }
+      }
+
+      document.getElementById("fillManifest").onclick = () => {
+        const u = computeSuggestedManifestUrl();
+        if (!u) {
+          alert(
+            "Не удалось вычислить URL. Укажите URL API (обязательно во встроенном режиме) или URL админки (режим внешней ссылки)."
+          );
+          return;
+        }
+        document.getElementById("updateManifestUrl").value = u;
+      };
+
+      document.getElementById("copyManifest").onclick = async () => {
+        const u =
+          computeSuggestedManifestUrl() || document.getElementById("updateManifestUrl").value.trim();
+        if (!u) {
+          alert("Нечего копировать: сначала заполните URL API / админки или введите манифест вручную.");
+          return;
+        }
+        await window.yanakDesktop.copyToClipboard(u);
+        alert("Скопировано в буфер обмена:\n\n" + u);
+      };
+
+      document.getElementById("cancel").onclick = () => window.close();
+
+      document.getElementById("save").onclick = async () => {
+        const backofficeUrl = document.getElementById("backofficeUrl").value.trim();
+        const apiBaseUrl = document.getElementById("apiBaseUrl").value.trim();
+        if (mode.bundled) {
+          if (!apiBaseUrl) {
+            alert("Укажите URL API");
+            return;
+          }
+        } else {
+          if (!backofficeUrl) {
+            alert("Укажите URL админки");
+            return;
+          }
+        }
+        await window.yanakDesktop.saveConfig({
+          backofficeUrl,
+          apiBaseUrl,
+          updateManifestUrl: document.getElementById("updateManifestUrl").value.trim()
+        });
+        window.close();
+      };
+    })();
+  </script>
+</body>
+</html>

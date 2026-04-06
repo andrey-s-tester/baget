@@ -1,0 +1,83 @@
+[
+  {
+    "id": "order-1774135922898",
+    "createdAt": "2026-03-21T23:32:02.898Z",
+    "status": "new",
+    "customerName": "Миша",
+    "phone": "+37377551763",
+    "email": "",
+    "store": "Янак магазин",
+    "comment": "",
+    "total": 352.57,
+    "config": {
+      "widthMm": 330,
+      "heightMm": 620,
+      "framePricePerMeter": 129,
+      "frameWasteCoeff": 1.1,
+      "minimalOrderPrice": 300,
+      "withMatboard": false,
+      "matboardWidthMm": 20,
+      "glassType": "regular",
+      "backingType": "cardboard",
+      "promoCode": "",
+      "selectedSku": "1001"
+    }
+  },
+  {
+    "id": "order-1774134623831",
+    "createdAt": "2026-03-21T23:10:23.831Z",
+    "status": "new",
+    "customerName": "Андрей",
+    "phone": "+37377551766",
+    "email": "Kipis@gmail.com",
+    "store": "Зеленый рынок",
+    "total": 386.31,
+    "config": {
+      "widthMm": 304,
+      "heightMm": 668,
+      "selectedSku": "1001",
+      "framePricePerMeter": 129,
+      "glassId": "matte",
+      "backingId": "foam5",
+      "useMatboard": true
+    }
+  },
+  {
+    "id": "order-1774134561025",
+    "createdAt": "2026-03-21T23:09:21.025Z",
+    "status": "new",
+    "customerName": "Андрей",
+    "phone": "+37377551766",
+    "email": "Kipis@gmail.com",
+    "store": "Зеленый рынок",
+    "total": 348.54,
+    "config": {
+      "widthMm": 304,
+      "heightMm": 600,
+      "selectedSku": "1001",
+      "framePricePerMeter": 129,
+      "glassId": "regular",
+      "backingId": "cardboard",
+      "useMatboard": true
+    }
+  },
+  {
+    "id": "order-1774134368551",
+    "createdAt": "2026-03-21T23:06:08.551Z",
+    "status": "issued",
+    "customerName": "Андрей",
+    "phone": "+37377551766",
+    "email": "Kipis@gmail.com",
+    "store": "Зеленый рынок",
+    "total": 858.72,
+    "config": {
+      "widthMm": 304,
+      "heightMm": 600,
+      "selectedSku": "1001",
+      "framePricePerMeter": 129,
+      "glassId": "regular",
+      "backingId": "cardboard",
+      "useMatboard": true
+    }
+  }
+]

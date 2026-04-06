@@ -1,0 +1,10 @@
+# Локальный Docker: отключает прод-URL из .env (витрина → тот же compose, api:4000).
+# Запуск: npm run compose:local
+# или: docker compose -f docker-compose.yml -f docker-compose.local.yml up -d
+services:
+  api:
+    environment:
+      - CORS_ORIGINS=
+  web:
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=

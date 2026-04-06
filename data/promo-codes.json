@@ -1,0 +1,4 @@
+[
+  { "code": "SALE10", "discountPercent": 10, "discountAmount": null, "isActive": true },
+  { "code": "VIP500", "discountPercent": null, "discountAmount": 500, "isActive": true }
+]

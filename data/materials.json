@@ -1,0 +1,66 @@
+{
+  "matboard": {
+    "name": "Паспарту",
+    "pricePerM2": 59,
+    "note": "При включённом паспарту"
+  },
+  "glass": [
+    {
+      "id": "none",
+      "name": "Нет",
+      "pricePerM2": 0
+    },
+    {
+      "id": "regular",
+      "name": "Обычное",
+      "pricePerM2": 58
+    },
+    {
+      "id": "matte",
+      "name": "Матовое",
+      "pricePerM2": 120
+    },
+    {
+      "id": "anti_glare",
+      "name": "Антиблик",
+      "pricePerM2": 250
+    },
+    {
+      "id": "acrylic",
+      "name": "Пластиковое",
+      "pricePerM2": 330
+    }
+  ],
+  "backing": [
+    {
+      "id": "none",
+      "name": "Нет",
+      "pricePerM2": 0,
+      "note": ""
+    },
+    {
+      "id": "cardboard",
+      "name": "Картон",
+      "pricePerM2": 20,
+      "note": "руб./м²"
+    },
+    {
+      "id": "foam5",
+      "name": "Пенокартон 5 мм",
+      "pricePerM2": 35,
+      "note": "руб./м²"
+    },
+    {
+      "id": "stretch",
+      "name": "Натяжка вышивки",
+      "pricePerM2": null,
+      "note": "0.9 × (ширина + высота) см"
+    },
+    {
+      "id": "stretcher",
+      "name": "Подрамник",
+      "pricePerM2": null,
+      "note": "1.1 × (ширина + высота) см"
+    }
+  ]
+}

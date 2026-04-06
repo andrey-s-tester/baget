@@ -1,0 +1,846 @@
+:root {
+  --bg: #f0f2f5;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --muted: #64748b;
+  --accent: #b01f39;
+  --accent-hover: #8f1830;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  --calc-green: #1a4d3a;
+  --calc-green-border: #143d2e;
+}
+/* Встраивание в админку: без шапки, компактнее по высоте */
+.embed-constructor-shell {
+  min-height: 100%;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  padding: 8px 12px 20px;
+  box-sizing: border-box;
+  /* Горизонтально не даём сцене превью вылезать за карточку (узкая колонка / embed) */
+  overflow-x: clip;
+  overflow-y: auto;
+  /* Иначе при overflow появляется scrollbar и колонка превью сужается после полной загрузки контента */
+  scrollbar-gutter: stable;
+}
+
+@media (max-width: 540px) {
+  .embed-constructor-shell {
+    padding: 6px 8px 14px;
+  }
+}
+
+.app-main--embed {
+  min-height: auto;
+  padding-bottom: 8px;
+}
+
+@media (max-width: 540px) {
+  .app-main--embed {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+.app-main {
+  width: 100%;
+  /* 100vh «прыгает» при скрытии панели браузера; dvh — стабильнее для полноэкранной колонки */
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 12px 16px 24px;
+  box-sizing: border-box;
+}
+
+.app-title {
+  margin: 0 0 8px;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.app-subtitle {
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 16px;
+  align-items: start;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.app-grid .card-inner:last-child {
+  position: sticky;
+  top: 12px;
+}
+
+@media (max-width: 960px) {
+  .app-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .app-grid .card-inner:last-child {
+    position: static;
+  }
+}
+
+@media (max-width: 540px) {
+  .app-main {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .app-grid {
+    gap: 14px;
+  }
+
+  .row-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card-inner {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 540px) {
+  .card-inner {
+    padding: 14px !important;
+  }
+}
+
+.card-heading {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.field-hint {
+  margin: 8px 0 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font: inherit;
+  background: #fff;
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: #94a3b8;
+  box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.25);
+}
+
+/* Число мм: поле + стрелки (без нативных spinner у type=number) */
+.input-stepper {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.input-stepper:focus-within {
+  outline: none;
+  border-color: #94a3b8;
+  box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.25);
+}
+
+.input-stepper .input-stepper__field {
+  flex: 1;
+  min-width: 0;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.input-stepper .input-stepper__field:focus {
+  box-shadow: none !important;
+}
+
+.input-stepper__field::-webkit-outer-spin-button,
+.input-stepper__field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-stepper__field[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.input-stepper__spin {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  border-left: 1px solid var(--border);
+  background: linear-gradient(180deg, #fafbfc 0%, #f1f5f9 100%);
+}
+
+.input-stepper__btn {
+  flex: 1;
+  min-height: 22px;
+  padding: 0 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 11px;
+  line-height: 1;
+  color: #475569;
+}
+
+.input-stepper__btn:hover {
+  background: rgba(148, 163, 184, 0.2);
+  color: #0f172a;
+}
+
+.input-stepper__btn:active {
+  background: rgba(148, 163, 184, 0.35);
+}
+
+.input-stepper__btn + .input-stepper__btn {
+  border-top: 1px solid var(--border);
+}
+
+.textarea {
+  min-height: 72px;
+  resize: vertical;
+}
+
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-dark {
+  background: #1e293b;
+  color: #fff;
+}
+
+.btn-dark:hover:not(:disabled) {
+  background: #334155;
+}
+
+.btn-muted {
+  background: #f1f5f9;
+  color: var(--text);
+}
+
+.btn-muted:hover:not(:disabled) {
+  background: #e2e8f0;
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-accent:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: #2563eb;
+  text-decoration: underline;
+  padding: 0;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+/*
+ * Оболочка: max-width до 1200px, не шире родителя (100%). В embed не используем vw — иначе шире карточки.
+ * (PREVIEW_VIEWPORT_MAX_WIDTH_PX). Сцена (.constructor-frame-preview-viewport) — своё
+ * соотношение сторон в CSS, не от мм рамы; рама внутри задаётся отдельным блоком.
+ * Старый флаг --constructor-preview-base-width: 960px давил превью уже ширины колонки.
+ */
+.constructor-frame-preview-shell {
+  --constructor-preview-max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  /* stretch: иначе align-items:center + min-height у сцены даёт intrinsic min-width > колонки — фон вылезает */
+  align-items: stretch;
+  gap: 4px;
+  width: 100%;
+  max-width: min(var(--constructor-preview-max-width), 100%);
+  min-width: 0;
+  box-sizing: border-box;
+  /* Не даём декору/градиенту вылезать за колонку на узких экранах */
+  overflow: hidden;
+}
+
+@media (max-width: 480px) {
+  .constructor-frame-preview-shell {
+    gap: clamp(2px, 1vw, 4px);
+  }
+}
+
+/* Сцена превью: фон на фиксированной «подложке», не подгоняется под пропорции рамы */
+.constructor-frame-preview-viewport {
+  /* Широкая сцена колонки; рама по центру с другим aspect-ratio внутри */
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  align-self: stretch;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  /* Не min-height:0 — в колонке flex/grid иначе preferred height от aspect-ratio:16/9 схлопывалась до ~0 */
+  min-height: auto;
+  /* Вписываем сцену в экран: при широком окне и низкой высоте (ландшафт) ширина ужимается под max-height */
+  max-height: min(92vh, 92dvh, 100svh);
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: #e8e2d8;
+  background-image:
+    radial-gradient(
+      ellipse 130% 95% at 50% clamp(-28%, -8vmin, -12px),
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    linear-gradient(180deg, #f3efe9 0%, #ece6dd 64%, #dfd7cc 64.02%, #d8cfc2 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%, 100% 100%;
+  background-clip: padding-box;
+  background-origin: border-box;
+  background-position: center top, center center;
+}
+
+/* Блок с canvas: без flex-shrink:0 портретная рама могла сжиматься flex до «невидимой» полоски */
+.constructor-frame-preview-frame {
+  flex-shrink: 0;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 540px) {
+  .constructor-frame-preview-viewport {
+    max-height: min(88dvh, 92svh, 100svh);
+    border-radius: 8px;
+    background-position: center -2vmin, center center;
+  }
+}
+
+/* Ряд: подпись высоты мм + вьюпорт — на узком экране колонкой, без обрезки по ширине */
+.frame-preview-dim-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+}
+
+.frame-preview-side-mm {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+@media (max-width: 540px) {
+  .frame-preview-dim-row {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .frame-preview-side-mm {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 10px;
+    order: 2;
+    text-align: center;
+  }
+
+  .frame-preview-dim-row .frame-preview-viewport {
+    order: 1;
+    align-self: center;
+    width: 100%;
+    max-width: min(560px, 100%);
+  }
+}
+
+/* Фиксированная квадратная зона под раму — размеры блока не прыгают */
+.frame-preview-viewport {
+  --frame-preview-stage-bg: linear-gradient(160deg, #edf1f6 0%, #e4e9f0 50%, #e6eaf0 100%);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  /*
+   * В ряду с вертикальной подписью мм: flex:1 + max-width — иначе min(420px,100%) даёт
+   * циклическую ширину ~0, либо 100% тянет всю строку поверх соседа.
+   */
+  flex: 1 1 auto;
+  max-width: 560px;
+  min-width: 0;
+  width: auto;
+  aspect-ratio: 1;
+  min-height: 0;
+  align-self: center;
+  box-sizing: border-box;
+  /* Непрозрачный фон сцены */
+  background: var(--frame-preview-stage-bg);
+  border-radius: 10px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+/* Общая подложка слоя превью */
+.frame-preview-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background: var(--frame-preview-stage-bg);
+}
+
+.frame-preview-layer--top {
+  pointer-events: auto;
+}
+
+/* Подписи под превью — ниже слоя вьюпорта, без налезания на кадр */
+.frame-preview-caption {
+  position: relative;
+  z-index: 0;
+}
+
+.price-box {
+  margin-top: 2px;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, #faf6ef 0%, #f2ecdf 100%);
+  border: 1px solid #e8dfd0;
+}
+
+.price-total {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.price-detail {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.error-text {
+  font-size: 0.875rem;
+  color: #dc2626;
+}
+
+.success-text {
+  font-size: 0.875rem;
+  color: #166534;
+}
+
+.sku-line {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.sku-line strong {
+  color: var(--text);
+}
+
+.file-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+@keyframes catalog-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Калькулятор: ряды опций (паспарту и т.п.) — тёмно-зелёные чипы как в эталоне */
+.calc-option-row {
+  display: grid;
+  grid-template-columns: minmax(90px, 130px) minmax(0, 1fr);
+  align-items: center;
+  gap: 8px 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  min-width: 0;
+}
+
+.calc-option-row__label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+  min-width: 7rem;
+}
+
+/*
+ * Двухколоночный app-grid (3fr / 2fr): правая колонка с формой узкая — чипы слоёв ломаются.
+ * Подпись над кнопками в этом диапазоне ширины окна.
+ */
+@media (min-width: 961px) and (max-width: 1618px) {
+  .calc-option-row--layer-toggles {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: 10px 0;
+  }
+
+  .calc-option-row--layer-toggles .calc-option-row__label {
+    min-width: 0;
+  }
+}
+
+/* Слои багета / паспарту: подпись над кнопками на узких экранах */
+@media (max-width: 640px) {
+  .calc-option-row--layer-toggles {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: 10px 0;
+  }
+
+  .calc-option-row--layer-toggles .calc-option-row__label {
+    min-width: 0;
+  }
+}
+
+/* Три кнопки слоёв багета */
+.calc-chip-row--frame-layers {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Четыре варианта паспарту */
+.calc-chip-row--matboard-layers {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.calc-chip-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.calc-chip {
+  min-height: 38px;
+  min-width: 0;
+  width: 100%;
+  padding: 0 6px;
+  font-size: clamp(0.62rem, 1.8vw + 0.45rem, 0.75rem);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border: 2px solid var(--calc-green-border);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--calc-green);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+@media (max-width: 780px) {
+  .calc-option-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* После общего стека: на планшете слои снова в две колонки (подпись | чипы) */
+@media (max-width: 780px) and (min-width: 641px) {
+  .calc-option-row--layer-toggles {
+    grid-template-columns: minmax(90px, 130px) 1fr;
+    align-items: center;
+    gap: 8px 14px;
+  }
+}
+
+@media (max-width: 420px) {
+  .calc-chip-row {
+    gap: 6px;
+  }
+
+  .calc-chip {
+    min-height: 36px;
+    padding: 0 4px;
+    letter-spacing: 0.02em;
+  }
+}
+
+.calc-chip:hover {
+  background: rgba(26, 77, 58, 0.06);
+}
+
+.calc-chip--active {
+  background: var(--calc-green);
+  color: #fff;
+  border-color: var(--calc-green);
+}
+
+/* Кнопки выбора числа слоёв — аккуратнее вид */
+.calc-chip-row--layer-pills .calc-chip {
+  min-height: 42px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  letter-spacing: 0.05em;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.calc-chip-row--layer-pills .calc-chip:hover:not(:disabled) {
+  background: rgba(26, 77, 58, 0.09);
+  box-shadow: 0 3px 10px rgba(26, 77, 58, 0.12);
+  transform: translateY(-1px);
+}
+
+.calc-chip-row--layer-pills .calc-chip--active {
+  box-shadow: 0 2px 12px rgba(26, 77, 58, 0.3);
+}
+
+@media (max-width: 420px) {
+  .calc-chip-row--layer-pills .calc-chip {
+    min-height: 38px;
+    padding: 0 8px;
+    font-size: clamp(0.62rem, 1.8vw + 0.45rem, 0.75rem);
+  }
+}
+
+.calc-matboard-layers {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.calc-matboard-layer {
+  padding: 12px;
+  border: 1px solid var(--calc-green-border);
+  border-radius: var(--radius);
+  background: #fafcfb;
+}
+
+.calc-matboard-layer__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.calc-matboard-layer__title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.calc-matboard-layer__sku {
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.calc-matboard-layer__sku--muted {
+  color: var(--muted);
+}
+
+.btn--compact {
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 0.8rem;
+}
+
+/* Секции конструктора: багет, паспарту */
+.calc-section-block {
+  margin-top: 8px;
+  padding: 14px 16px 16px;
+  border: 1px solid var(--calc-green-border);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #fafcfb 0%, #f4f7f6 100%);
+  box-shadow: var(--shadow);
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  container-type: inline-size;
+  container-name: calc-section;
+}
+
+/* Узкая колонка / встраивание: те же слои, что и при media, без привязки к ширине окна */
+@container calc-section (max-width: 560px) {
+  .calc-option-row--layer-toggles {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: 10px 0;
+  }
+
+  .calc-option-row--layer-toggles .calc-option-row__label {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .calc-section-block {
+    padding: 12px 10px 14px;
+  }
+}
+
+.calc-section-block__title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.calc-section-block .calc-option-row {
+  margin-top: 0;
+}
+
+.calc-section-block .calc-matboard-layers {
+  margin-top: 8px;
+}
+
+/* Доп. материалы — сетка как в бэкофисе */
+.calc-materials-section {
+  margin-top: 10px;
+  padding: 14px 16px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  box-shadow: var(--shadow);
+}
+
+.calc-materials-section__title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.calc-materials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 12px 16px;
+  align-items: start;
+  min-width: 0;
+}
+
+@media (max-width: 480px) {
+  .calc-materials-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calc-materials-field {
+  margin: 0;
+  min-width: 0;
+}
+
+.calc-materials-field .select,
+.calc-materials-field .input {
+  width: 100%;
+}

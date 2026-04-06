@@ -1,0 +1,80 @@
+{
+  "name": "@yanak/admin-desktop",
+  "version": "1.0.2",
+  "private": true,
+  "description": "Десктопная оболочка для Yanak Backoffice (Windows)",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "icons": "node scripts/generate-icon.cjs",
+    "predist": "node scripts/generate-icon.cjs && node ../../scripts/prepare-desktop-bundled-ui.cjs && node ../../scripts/fetch-node-win.cjs && node scripts/ensure-defaults.cjs",
+    "dist": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --win",
+    "dist:quick": "node scripts/generate-icon.cjs && node ../../scripts/fetch-node-win.cjs && node scripts/ensure-defaults.cjs && cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --win"
+  },
+  "build": {
+    "appId": "com.yanak.admin.desktop",
+    "productName": "Yanak Admin",
+    "copyright": "Copyright © Yanak",
+    "directories": {
+      "output": "dist-pack"
+    },
+    "icon": "build/icon.ico",
+    "files": [
+      "electron/**/*",
+      "build/icon.ico",
+      "build/icon.png",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "electron/app-defaults.json",
+        "to": "app-defaults.json"
+      },
+      {
+        "from": "bundled-ui",
+        "to": "bundled-ui"
+      },
+      {
+        "from": "vendor/node-win",
+        "to": "node-win"
+      }
+    ],
+    "win": {
+      "signAndEditExecutable": false,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "createDesktopShortcut": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerLanguages": [
+        "ru_RU",
+        "en_US"
+      ],
+      "language": "1049"
+    }
+  },
+  "dependencies": {
+    "semver": "^7.6.3"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "electron": "33.2.1",
+    "electron-builder": "25.1.8",
+    "to-ico": "^1.1.5"
+  }
+}

@@ -1,0 +1,23 @@
+# Reverse proxy + TLS (Let's Encrypt). Запуск: docker compose --profile https up -d
+# Нужны: A-записи на IP сервера, порты 80/443 на хосте, в Cloudflare SSL = Full (strict).
+# Если на Windows порт 80 занят IIS — остановите сайт по умолчанию или смените привязку.
+
+{
+	# Подставляется из docker-compose (по умолчанию postmaster@bagetnaya-yanak.ru)
+	email {$CADDY_EMAIL}
+}
+
+bagetnaya-yanak.ru, www.bagetnaya-yanak.ru {
+	encode gzip
+	reverse_proxy web:3000
+}
+
+api.bagetnaya-yanak.ru {
+	encode gzip
+	reverse_proxy api:4000
+}
+
+admin.bagetnaya-yanak.ru {
+	encode gzip
+	reverse_proxy backoffice:3001
+}

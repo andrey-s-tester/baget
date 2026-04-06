@@ -1,0 +1,56 @@
+openapi: 3.0.3
+info:
+  title: Framing Workshop MVP API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+paths:
+  /auth/login:
+    post:
+      summary: Login
+      responses:
+        '200': { description: OK }
+  /catalog/frame-profiles:
+    get:
+      summary: List frame profiles
+      responses:
+        '200': { description: OK }
+  /catalog/materials:
+    get:
+      summary: List materials
+      responses:
+        '200': { description: OK }
+  /pricing/quote:
+    post:
+      summary: Calculate quote
+      responses:
+        '200': { description: OK }
+  /orders:
+    post:
+      summary: Create order
+      responses:
+        '201': { description: Created }
+    get:
+      summary: List orders
+      responses:
+        '200': { description: OK }
+  /orders/{id}:
+    get:
+      summary: Get order
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200': { description: OK }
+  /orders/{id}/status:
+    patch:
+      summary: Change status
+      responses:
+        '200': { description: Updated }
+  /production/tasks/my:
+    get:
+      summary: My production tasks
+      responses:
+        '200': { description: OK }

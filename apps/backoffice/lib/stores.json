@@ -1,0 +1,23 @@
+[
+  {
+    "id": "store-1",
+    "name": "Магазин на Невском",
+    "address": "Невский пр., 1",
+    "phone": "",
+    "isActive": true
+  },
+  {
+    "id": "store-2",
+    "name": "Магазин на Московской",
+    "address": "Московский пр., 100",
+    "phone": "",
+    "isActive": true
+  },
+  {
+    "id": "store-1774252549453",
+    "name": "Test Store",
+    "address": "Addr",
+    "phone": "123",
+    "isActive": true
+  }
+]

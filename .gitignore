@@ -1,0 +1,21 @@
+node_modules
+.next
+dist
+coverage
+.env
+.env.*
+!.env.example
+*.log
+deploy/caddy/
+deploy/cloudflared/
+pnpm-lock.yaml
+yarn.lock
+apps/admin-desktop/dist-pack
+apps/admin-desktop/electron/app-defaults.json
+apps/admin-desktop/bundled-ui
+apps/admin-desktop/vendor/node-win
+
+# Архивы и дампы для переноса (см. transfer/README.txt)
+transfer/*.sql
+transfer/*.sql.gz
+transfer/*.tar.gz

@@ -1,0 +1,5 @@
+{
+  "backofficeUrl": "http://localhost:3001",
+  "apiBaseUrl": "http://localhost:4001",
+  "updateManifestUrl": "http://localhost:4001/api/system/desktop-admin-update"
+}
