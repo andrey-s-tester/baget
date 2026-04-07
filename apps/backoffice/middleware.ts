@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const API_BASE_URL = process.env.BACKEND_API_URL || process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4000";
 import { AUTH_SESSION_COOKIE } from "./app/lib/auth-constants";
 
 const AUTH_COOKIE_NAME = AUTH_SESSION_COOKIE;
@@ -14,7 +13,9 @@ const PUBLIC_API_PREFIXES = [
   "/api/catalog/matboard",
   "/api/image-proxy",
   /** Картинки каталога: allowlist URL внутри route */
-  "/api/resolved-frame-image"
+  "/api/resolved-frame-image",
+  /** Манифест обновлений десктопа — публичный JSON с API, без лишнего auth/me в middleware */
+  "/api/system/desktop-admin-update"
 ];
 
 const AUTH_CHECK_TIMEOUT_MS = 12000;
@@ -22,9 +23,11 @@ const AUTH_CHECK_TIMEOUT_MS = 12000;
 async function hasSession(request: NextRequest): Promise<boolean> {
   try {
     const cookie = request.headers.get("cookie") || "";
+    /** Тот же origin, что у запроса — не BACKEND_API_URL. В Edge middleware env Nest часто пуст при сборке без Docker → ломался прод. */
+    const meUrl = new URL("/api/auth/me", request.url).toString();
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), AUTH_CHECK_TIMEOUT_MS);
-    const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
+    const res = await fetch(meUrl, {
       method: "GET",
       headers: { cookie },
       cache: "no-store",

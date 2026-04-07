@@ -86,6 +86,17 @@ docker compose up -d --build
 
 Миграции Prisma выполняются при старте контейнера `api` (`prisma migrate deploy`).
 
+## Админка: белая страница «Internal Server Error» (`admin.…`)
+
+Частые причины:
+
+1. **Повреждённая или dev-сборка в томе** `backoffice_next_build` (после `next dev` или обрыва `next build`). Пересобрать контейнер админки:
+   ```bash
+   FORCE_BACKOFFICE_NEXT_BUILD=1 docker compose up -d backoffice
+   ```
+2. **Логи:** `docker compose logs backoffice --tail 150` — искать ошибки при `next build` / `next start`.
+3. **Middleware и сессия:** проверка логина идёт через прокси **`/api/auth/me` на том же хосте**, а не напрямую в Nest из Edge (иначе при сборке без `BACKEND_API_URL` ломался прод).
+
 ## Резервное копирование по расписанию
 
 Поставьте cron на сервере, например ежедневно:
